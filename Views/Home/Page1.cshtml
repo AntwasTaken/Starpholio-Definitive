@@ -1,0 +1,562 @@
+﻿@{
+    Layout = "_Layout2"; // Set the layout to use _Layout2.cshtml
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+    <style>
+
+
+        body {
+            background: linear-gradient(-45deg, cyan, magenta, yellow);
+            color: black;
+            font-family: "Comfortaa", sans-serif;
+            margin: 0;
+            padding: 0px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        .container {
+            display: flex;
+            margin: 0; /* Adjust the left margin value here */
+            margin-left:-60px;
+            padding: 0;
+       
+        }
+
+        .profile-partial,.search-partial {
+            flex: 1;
+            height: 800px;
+            min-width: 400px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 40px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        
+         
+        .posts-partial {
+            flex: 1;
+            min-width: 700px;
+            height: 800px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 40px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            
+            align-items: center;
+        }
+
+        .profile-picture {
+            display: flex;
+            width: 120px;
+            height: 120px;
+            border: 10px solid black;
+            border-radius: 50%;
+            background-color: black;
+            overflow: hidden;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+            .profile-picture img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .post {
+            width: 600px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .post-profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+            .post-profile-picture img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .post-username {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .post-content {
+            text-align: center;
+        }
+
+        .post-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .like {
+            cursor: pointer;
+        }
+
+            .like.clicked {
+                color: red;
+            }
+
+        .comment {
+            cursor: pointer;
+        }
+
+        .comment-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .comment-list li {
+                margin-bottom: 10px;
+            }
+
+        .comment-input-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .comment-input-text {
+            width: 200px;
+            height: 30px;
+            padding: 5px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.6);
+            outline: none;
+            margin-right: 5px;
+        }
+
+        .comment-input-btn {
+            padding: 5px 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        .logo {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .followers,
+        .following {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .update-btn, .edit-btn, .follow-btn {
+            padding: 10px 20px;
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 300px;
+            height: 40px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.6);
+            outline: none;
+        }
+
+            .search-input::placeholder {
+                color: gray;
+            }
+
+
+
+        .edit-form {
+            display: none;
+            margin-top: 10px;
+        }
+
+            .edit-form input {
+                margin-bottom: 5px;
+            }
+
+        .profile-name {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .add-post-button {
+            position: absolute;
+            top: 20px;
+            left: 80px;
+        }
+
+        .add-post-btn {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 60%;
+            background-image: url("imagens/mais.png");
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+        .create-post-form {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            width: 300px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+            .create-post-form textarea {
+                width: 100%;
+                height: 80px;
+                resize: none;
+                margin-bottom: 10px;
+            }
+
+            .create-post-form input[type="file"] {
+                margin-bottom: 10px;
+            }
+
+            .create-post-form button {
+                padding: 5px 10px;
+                background-color: black;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .post-image {
+              max-width: 100%;
+              height: auto;
+             margin-bottom: 10px;
+             }
+
+             .post-list {
+                display: flex;
+                flex-direction: column-reverse;
+                 }
+
+             .post-list .post {
+                margin-bottom: 20px;
+            }
+
+        .aboutus-button {
+            position: absolute;
+            top: 140px;
+            left: 80px;
+        }
+
+        .aboutus-btn {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 60%;
+            background-image: url("imagens/aboutus.png");
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+
+        .agenda-button {
+            position: absolute;
+            top: 80px;
+            left: 80px;
+        }
+
+        .agenda-btn {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 60%;
+            background-image: url("imagens/message.png");
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+
+        .aboutus-text {
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            var postId = 2; // Identificador inicial para os posts
+
+            // Botão "like"
+            $(document).on('click', '.like', function () {
+                $(this).toggleClass('clicked');
+            });
+
+            // Botão "Editar"
+            $(document).on('click', '.edit-btn', function () {
+                var postId = $(this).data('post-id');
+                $('.edit-form[data-post-id="' + postId + '"]').toggle();
+                $('.profile-details[data-post-id="' + postId + '"]').toggle();
+                $('.update-btn[data-post-id="' + postId + '"]').appendTo('.edit-form[data-post-id="' + postId + '"]');
+            });
+            // Nova foto de perfil
+            $(document).on('change', '#profile-picture-input', function () {
+                var file = this.files[0];
+            });
+
+            // Botão "Atualizar Perfil"
+            $(document).on('click', '.update-btn', function () {
+                var postId = $(this).data('post-id');
+                var nameInput = $('.name-input[data-post-id="' + postId + '"]').val().trim();
+                var ageInput = $('.age-input[data-post-id="' + postId + '"]').val().trim();
+                var locationInput = $('.location-input[data-post-id="' + postId + '"]').val().trim();
+                var cameraInput = $('.camera-input[data-post-id="' + postId + '"]').val().trim();
+                var photographyInput = $('.photography-input[data-post-id="' + postId + '"]').val().trim();
+
+                // Verificar se os campos de entrada estão vazios e manter os valores originais se estiverem
+                if (nameInput === '') {
+                    nameInput = $('.profile-details[data-post-id="' + postId + '"] .profile-name').text();
+                }
+                if (ageInput === '') {
+                    ageInput = $('.profile-details[data-post-id="' + postId + '"] .profile-age').text().replace('Age: ', '');
+                }
+                if (locationInput === '') {
+                    locationInput = $('.profile-details[data-post-id="' + postId + '"] .profile-location').text().replace('Location: ', '');
+                }
+                if (cameraInput === '') {
+                    cameraInput = $('.profile-details[data-post-id="' + postId + '"] .profile-camera').text().replace('Camera: ', '');
+                }
+                if (photographyInput === '') {
+                    photographyInput = $('.profile-details[data-post-id="' + postId + '"] .profile-photography').text().replace('Photography: ', '');
+                }
+
+                // Atualizar as informações do perfil com os valores dos campos de entrada
+                $('.profile-details[data-post-id="' + postId + '"] .profile-name').text(nameInput);
+                $('.profile-details[data-post-id="' + postId + '"] .profile-age').text('Age: ' + ageInput);
+                $('.profile-details[data-post-id="' + postId + '"] .profile-location').text('Location: ' + locationInput);
+                $('.profile-details[data-post-id="' + postId + '"] .profile-camera').text('Camera: ' + cameraInput);
+                $('.profile-details[data-post-id="' + postId + '"] .profile-photography').text('Photography: ' + photographyInput);
+
+                // Alternar a exibição dos elementos
+                $('.profile-details[data-post-id="' + postId + '"]').show();
+                $('.edit-form[data-post-id="' + postId + '"]').hide();
+            });
+
+           
+            $(document).on('click', '.comment', function () {
+                   var postId = $(this).data('post-id');
+                   var $commentInput = $('<input type="text" class="comment-input-text" placeholder="Adicionar um comentário">');
+                   var $commentButton = $('<button class="comment-input-btn">Enviar</button>');
+                   var $commentContainer = $('<div class="comment-input-container"></div>').append($commentInput).append($commentButton);
+
+                // Limpar qualquer outro campo de entrada de comentário antes de adicionar o novo
+                $('.comment-input-container[data-post-id="' + postId + '"]').remove();
+
+                // Adicionar o campo de entrada de comentário
+                $(this).parent().find('.comment-icons').css('position', 'relative');
+                $(this).parent().append($commentContainer);
+            });
+
+            // Evento de clique no botão "Enviar" do campo de entrada de comentário
+            $(document).on('click', '.comment-input-btn', function () {
+                var postId = $(this).closest('.post').data('post-id');
+                var $commentInput = $(this).prev();
+                var commentText = $commentInput.val().trim(); // Obtém o texto do comentário
+
+                if (commentText !== '') {
+                    var commentItem = '<li>' + commentText + '</li>'; // Cria um novo item de comentário
+                    $(this).closest('.post').find('.comment-list').append(commentItem); // Adiciona o novo comentário à lista de comentários
+                    $commentInput.val(''); // Limpa o campo de entrada de comentário
+                }
+
+                // Remover o campo de entrada de comentário após adicionar o comentário
+                $(this).closest('.comment-section').find('.comment-input-container').remove();
+            });
+
+            $(document).on('click', '.add-post-btn', function () {
+                postId++; // Incrementar o identificador do post
+                $('.create-post-form').attr('data-post-id', postId); // Definir o identificador do post no formulário de criação de post
+                $('.create-post-form[data-post-id="' + postId + '"]').toggle();
+            });
+
+            // Lógica de envio do formulário de criação de post
+            $(document).on('click', '.create-post-form button', function () {
+                var postId = $(this).closest('.create-post-form').data('post-id');
+                var postContent = $('.create-post-form[data-post-id="' + postId + '"] textarea').val();
+                var postImages = [];
+
+                // Obter a foto de perfil do perfil atual
+                var profilePictureUrl = $('.profile-details[data-post-id="' + postId + '"] .profile-picture img').attr('src');
+
+                // Obter a lista de arquivos selecionados
+                var files = $('.create-post-form[data-post-id="' + postId + '"] input[type="file"]')[0].files;
+
+                // Ler cada arquivo selecionado e adicioná-lo à lista de imagens
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        postImages.push(e.target.result);
+
+                        // Verificar se todas as imagens foram carregadas
+                        if (postImages.length === files.length) {
+                            // Criar o elemento de post com as imagens e conteúdo
+                            var postElement = $('<div class="post"></div>');
+                            postElement.attr('data-post-id', postId); // Definir o identificador do post
+
+                            // Adicionar a foto de perfil
+                            var profilePictureElement = $('<div class="post-profile-picture"></div>');
+                            var profilePictureImg = $('<img>').attr('src', profilePictureUrl);
+                            profilePictureElement.append(profilePictureImg);
+                            postElement.append(profilePictureElement);
+
+                            // Adicionar o conteúdo do post
+                            var postContentElement = $('<div class="post-content"></div>');
+                            postContentElement.text(postContent);
+                            postElement.append(postContentElement);
+
+                            // Adicionar as imagens ao post
+                            for (var j = 0; j < postImages.length; j++) {
+                                var imageElement = $('<img class="post-image">');
+                                imageElement.attr('src', postImages[j]);
+                                postElement.append(imageElement);
+                            }
+
+
+
+                            // Adicionar o post à lista de posts
+                            $('.post-list').append(postElement);
+
+                            // Limpar o formulário de criação de post
+                            $('.create-post-form[data-post-id="' + postId + '"] textarea').val('');
+                            $('.create-post-form[data-post-id="' + postId + '"] input[type="file"]').val('');
+                            $('.create-post-form[data-post-id="' + postId + '"]').hide();
+                        }
+                    };
+
+                    // Ler o arquivo como URL de dados
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $(document).on('click', '.aboutus-btn', function () {
+                var textBox = $('.aboutus-text');
+
+                // Se o balão de texto já estiver visível, ocultá-lo
+                if (textBox.length) {
+                    textBox.remove();
+                    return;
+                }
+
+                textBox = $('<div class="aboutus-text">André Santos e Vasco Borges - aluno 20159 e 20186 </div>');
+                
+                textBox.css({
+                    position: 'absolute',
+                    top: '120px',
+                    left: '140px',
+                    padding: '10px',
+                    backgroundColor: 'white',
+                    border: '1px solid black',
+                    borderRadius: '5px',
+                    zIndex: '9999'
+                });
+
+                
+
+                $('body').append(textBox);
+            });
+        });
+            
+
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="aboutus-button">
+            <button class="aboutus-btn"></button>
+        </div>
+        
+        <div class="agenda-button">
+            <button class="agenda-btn"></button>
+        </div>
+
+        <div class="frame frame-profile">
+            <div class="profile-partial">
+               @Html.Partial("~/Views/Shared/_profile.cshtml")
+            </div>
+        </div>
+        <div class="frame frame-polaroid">
+            <div class="posts-partial">
+                @Html.Partial("~/Views/Shared/_posts.cshtml")
+            </div>
+        </div>
+        <div class="frame frame-search">
+            <div class="search-partial">
+                @Html.Partial("~/Views/Shared/_search.cshtml")
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
